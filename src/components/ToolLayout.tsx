@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Upload, FileText, X, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
 import clsx from 'clsx'
 import { PdfPreviewPanel } from './PdfPreviewPanel'
+import { GoogleDriveButton } from './GoogleDriveButton'
 
 export type FileEntry = { file: File; name: string; size: number }
 
@@ -141,6 +142,9 @@ export function ToolLayout({
                   >
                     Download
                   </a>
+                  {outputUrl && outputName && (
+                    <GoogleDriveButton outputUrl={outputUrl} outputName={outputName} />
+                  )}
                   <button
                     onClick={handleReset}
                     className="px-5 py-2.5 rounded-full border border-divider text-ink-muted text-sm hover:text-ink hover:border-ink/20 transition-colors"
