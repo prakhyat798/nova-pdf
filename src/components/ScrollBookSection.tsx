@@ -154,7 +154,7 @@ export function ScrollBookSection() {
       style={{
         position: 'relative',
         height: '70vh',
-        background: '#F7F5F0',
+        background: 'var(--color-canvas)',
         overflow: 'hidden',
       }}
     >

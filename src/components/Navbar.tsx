@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Search, Menu, X } from 'lucide-react'
+import { Search, Menu, X, Moon, Sun } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { categories } from '../data/tools'
+import { useTheme } from '../hooks/useTheme'
 import clsx from 'clsx'
 
 export function Navbar() {
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { isDark, toggle: toggleTheme } = useTheme()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4)
@@ -60,14 +62,49 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Right: search + badge */}
-        <div className="flex items-center gap-3 ml-auto shrink-0">
+        {/* Right: search + theme toggle + badge + hamburger */}
+        <div className="flex items-center gap-2 ml-auto shrink-0">
           <button
             id="nav-search"
             aria-label="Search tools"
             className="w-8 h-8 rounded-full flex items-center justify-center text-ink-muted hover:text-ink hover:bg-clay-light/40 transition-colors"
           >
             <Search size={17} strokeWidth={1.5} />
+          </button>
+
+          {/* Theme toggle */}
+          <button
+            id="nav-theme-toggle"
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            onClick={toggleTheme}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-ink-muted hover:text-ink transition-colors relative overflow-hidden"
+            style={{ background: isDark ? 'rgba(177,151,252,0.1)' : 'rgba(170,255,77,0.1)' }}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {isDark ? (
+                <motion.span
+                  key="sun"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute"
+                >
+                  <Sun size={16} strokeWidth={1.5} style={{ color: '#B197FC' }} />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="moon"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute"
+                >
+                  <Moon size={16} strokeWidth={1.5} style={{ color: '#1A2412' }} />
+                </motion.span>
+              )}
+            </AnimatePresence>
           </button>
 
           <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-pill bg-sage-light text-forest text-xs font-semibold">

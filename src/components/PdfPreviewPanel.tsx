@@ -172,8 +172,8 @@ export function PdfPreviewPanel({ source, label = 'Preview', accent = 'lime' }: 
       <div
         className="relative rounded-2xl overflow-hidden"
         style={{
-          background: '#F0EDE8',
-          border: '1px solid rgba(28,25,23,0.08)',
+          background: 'var(--color-divider)',
+          border: '1px solid rgba(128,128,128,0.12)',
           minHeight: 220,
         }}
       >

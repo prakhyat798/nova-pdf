@@ -68,7 +68,7 @@ function HeroSection({
   return (
     <section
       id="hero"
-      style={{ background: '#1A2412', position: 'relative', overflow: 'hidden' }}
+      style={{ background: 'var(--color-hero-bg)', position: 'relative', overflow: 'hidden' }}
     >
       <div
         style={{
@@ -174,7 +174,7 @@ function HeroSection({
           left: 0,
           right: 0,
           height: 60,
-          background: 'linear-gradient(to bottom, transparent, #F7F5F0)',
+          background: 'linear-gradient(to bottom, transparent, var(--color-canvas))',
           pointerEvents: 'none',
         }}
       />

@@ -8,34 +8,23 @@ export default {
         sans:    ['"DM Sans"', 'system-ui', 'sans-serif'],
       },
       colors: {
-        // Warm neutrals
-        canvas:  '#F7F5F0',
-        card:    '#FEFCF8',
-        'card-hover': '#FEFDFB',
-        paper:   '#FEFCF8',
-        ink:     '#1C1917',
-        'ink-muted': '#78716C',
-        'ink-faint': '#A8A29E',
-        divider: '#E8E4DD',
-
-        // Dark hero band
-        forest:  '#1A2412',
-        'forest-card': '#243018',
-
-        // Accents
-        lime:    '#AAFF4D',
-        'lime-dim': '#8FD93D',
-        sage:    '#8FAF7E',
-        'sage-light': '#C4D9BC',
-        clay:    '#D4B896',
-        'clay-light': '#EDE0D0',
-
-        // Pastel label fills
-        'label-convert':  '#EAF4FF',
-        'label-organize': '#F0EAF8',
-        'label-edit':     '#FFF5EA',
-        'label-security': '#EAF8F0',
-        'label-optimize': '#FFF8EA',
+        // All colors now reference CSS variables — work in both light + dark
+        canvas:        'var(--color-canvas)',
+        card:          'var(--color-card)',
+        'card-hover':  'var(--color-card-hover)',
+        paper:         'var(--color-card)',
+        ink:           'var(--color-ink)',
+        'ink-muted':   'var(--color-ink-muted)',
+        'ink-faint':   'var(--color-ink-faint)',
+        divider:       'var(--color-divider)',
+        forest:        'var(--color-forest)',
+        'forest-card': 'var(--color-forest-card)',
+        lime:          'var(--color-accent)',
+        'lime-dim':    'var(--color-accent-dim)',
+        sage:          'var(--color-sage)',
+        'sage-light':  'var(--color-sage-light)',
+        clay:          'var(--color-clay)',
+        'clay-light':  'var(--color-clay-light)',
       },
       borderRadius: {
         xl:   '16px',
@@ -45,9 +34,9 @@ export default {
         pill: '9999px',
       },
       boxShadow: {
-        card:       '0 2px 8px rgba(28,25,23,0.06), 0 1px 2px rgba(28,25,23,0.04)',
-        'card-lift':'0 8px 24px rgba(28,25,23,0.10), 0 2px 6px rgba(28,25,23,0.06)',
-        'card-wide':'0 4px 16px rgba(28,25,23,0.08)',
+        card:       '0 2px 8px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05)',
+        'card-lift':'0 8px 24px rgba(0,0,0,0.14), 0 2px 6px rgba(0,0,0,0.08)',
+        'card-wide':'0 4px 16px rgba(0,0,0,0.10)',
       },
       transitionTimingFunction: {
         spring: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
