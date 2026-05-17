@@ -181,7 +181,7 @@ export function ToolLayout({
                   onDrop={onDrop}
                   onClick={() => inputRef.current?.click()}
                   className={clsx(
-                    'border-2 border-dashed rounded-2xl p-10 flex flex-col items-center gap-3 cursor-pointer transition-all duration-200',
+                    'border-2 border-dashed rounded-2xl p-6 sm:p-10 flex flex-col items-center gap-3 cursor-pointer transition-all duration-200',
                     dragging
                       ? 'border-lime bg-lime/5 scale-[1.01]'
                       : 'border-divider hover:border-sage/50 hover:bg-sage/5',

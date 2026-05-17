@@ -83,7 +83,7 @@ function HeroSection({
         className="lg:grid-cols-[1fr_1fr] lg:min-h-[580px]"
       >
         {/* ── LEFT: text ────────────────────────────────────────────────── */}
-        <div style={{ position: 'relative', zIndex: 10, padding: '4rem 0 4rem 0' }} className="lg:pr-12">
+        <div style={{ position: 'relative', zIndex: 10, padding: '2.5rem 0 2.5rem 0' }} className="lg:pr-12 lg:py-[5rem]">
 
           {/* Heading */}
           <h1
@@ -105,7 +105,8 @@ function HeroSection({
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.9 }}
-            style={{ position: 'relative', maxWidth: 440 }}
+            style={{ position: 'relative', maxWidth: '100%' }}
+            className="sm:max-w-[440px]"
           >
             <Search
               size={17}
@@ -351,9 +352,14 @@ export function HomePage() {
           <div className="flex-1 h-px bg-divider ml-2" />
         </div>
 
-        {/* Category tabs */}
-        <div className="mb-7">
+        {/* Category tabs — with scroll fade hint on mobile */}
+        <div className="mb-7 relative">
           <CategoryTabs active={activeCat} onChange={handleCatChange} />
+          {/* Fade hint to show tabs are scrollable on mobile */}
+          <div
+            className="pointer-events-none absolute right-0 top-0 bottom-0 w-10 sm:hidden"
+            style={{ background: 'linear-gradient(to left, #F7F5F0, transparent)' }}
+          />
         </div>
 
         {/* Bento grid */}

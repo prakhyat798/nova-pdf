@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Search, Menu, X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { categories } from '../data/tools'
 import clsx from 'clsx'
 
@@ -87,31 +88,46 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
-      {mobileOpen && (
-        <div
-          id="mobile-menu"
-          className="lg:hidden border-t border-divider bg-card px-4 py-4"
-        >
-          <nav className="flex flex-col gap-1">
-            {categories.filter(c => c.id !== 'all').map((cat) => (
+      {/* Mobile drawer — animated */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            id="mobile-menu"
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="lg:hidden border-t border-divider bg-canvas px-4 py-3"
+          >
+            <nav className="flex flex-col gap-0.5">
+              {/* Home — all tools */}
               <Link
-                key={cat.id}
-                to={`/?cat=${cat.id}`}
-                id={`mobile-${cat.id}`}
-                className={clsx(
-                  'px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
-                  activeCat === cat.id
-                    ? 'bg-lime/20 text-forest font-semibold'
-                    : 'text-ink-muted hover:text-ink hover:bg-canvas',
-                )}
+                to="/"
+                id="mobile-all-tools"
+                className="px-3 py-3.5 rounded-xl text-sm font-medium transition-colors text-ink-muted hover:text-ink hover:bg-canvas/80 border-b border-divider mb-1"
               >
-                {cat.label}
+                🏠 All tools
               </Link>
-            ))}
-          </nav>
-        </div>
-      )}
+              {categories.filter(c => c.id !== 'all').map((cat) => (
+                <Link
+                  key={cat.id}
+                  to={`/?cat=${cat.id}`}
+                  id={`mobile-${cat.id}`}
+                  className={clsx(
+                    'px-3 py-3.5 rounded-xl text-sm font-medium transition-colors',
+                    activeCat === cat.id
+                      ? 'bg-lime/15 text-forest font-semibold'
+                      : 'text-ink-muted hover:text-ink hover:bg-canvas/80',
+                  )}
+                >
+                  {cat.label}
+                </Link>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
