@@ -89,7 +89,7 @@ export function ToolLayout({
   const showPreview = isPdfTool && (previewInputFile !== null || (state === 'done' && outputUrl))
 
   return (
-    <div className={clsx('min-h-[80vh] px-4 py-12 mx-auto transition-all duration-500', showPreview ? 'max-w-6xl' : 'max-w-3xl')}>
+    <div className={clsx('min-h-[80vh] px-3 sm:px-4 py-8 sm:py-12 mx-auto transition-all duration-500', showPreview ? 'max-w-6xl' : 'max-w-3xl')}>
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -110,7 +110,7 @@ export function ToolLayout({
           <span className={clsx('cat-label px-2.5 py-1 rounded-md inline-block mb-3', catColors[category] ?? 'bg-sage/10 text-forest')}>
             {category}
           </span>
-          <h1 className="font-serif-italic text-4xl sm:text-5xl text-ink mb-2">{title}</h1>
+          <h1 className="font-serif-italic text-3xl sm:text-4xl lg:text-5xl text-ink mb-2">{title}</h1>
           <p className="text-sm text-ink-muted leading-relaxed max-w-lg">{description}</p>
         </div>
 

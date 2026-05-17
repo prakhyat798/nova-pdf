@@ -74,24 +74,26 @@ function HeroSection({
         style={{
           maxWidth: 1280,
           margin: '0 auto',
-          padding: '0 2rem',
+          padding: '0 1.5rem',
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          minHeight: 580,
+          gridTemplateColumns: '1fr',
+          minHeight: 480,
           alignItems: 'center',
         }}
+        className="lg:grid-cols-[1fr_1fr] lg:min-h-[580px]"
       >
         {/* ── LEFT: text ────────────────────────────────────────────────── */}
-        <div style={{ position: 'relative', zIndex: 10, padding: '5rem 3rem 5rem 0' }}>
+        <div style={{ position: 'relative', zIndex: 10, padding: '4rem 0 4rem 0' }} className="lg:pr-12">
 
-          {/* Heading — one block, no duplicate */}
+          {/* Heading */}
           <h1
             className="font-serif-italic"
             style={{
-              fontSize: 'clamp(3rem, 4.5vw, 5.4rem)',
+              fontSize: 'clamp(2.4rem, 6vw, 5.4rem)',
               lineHeight: 1.04,
               letterSpacing: '-0.01em',
-              margin: '0 0 2.5rem',
+              margin: '0 0 2rem',
+              textAlign: 'left',
             }}
           >
             <AnimatedWords text="Every PDF tool" color="#ffffff" delay={0.15} />

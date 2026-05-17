@@ -150,9 +150,10 @@ export function ScrollBookSection() {
     <section
       ref={sectionRef}
       id="gliding-pages"
+      className="hidden md:block"
       style={{
         position: 'relative',
-        height: '90vh',
+        height: '70vh',
         background: '#F7F5F0',
         overflow: 'hidden',
       }}

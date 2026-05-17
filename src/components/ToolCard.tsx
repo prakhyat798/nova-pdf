@@ -95,12 +95,12 @@ export function FeaturedToolCard({ tool, index }: ToolCardProps) {
       variants={cardVariants}
       initial="hidden"
       animate="visible"
-      className="col-span-2 h-full"
+      className="sm:col-span-2 h-full"
     >
       <Link
         to={`/tool/${tool.id}`}
         id={`tool-card-featured-${tool.id}`}
-        className="bento-card p-6 flex items-center gap-6 group block h-full"
+        className="bento-card p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 group block h-full"
         aria-label={`Open ${tool.name}`}
       >
         {/* Left: info */}
