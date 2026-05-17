@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Upload, FileText, X, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
 import clsx from 'clsx'
+import { PdfPreviewPanel } from './PdfPreviewPanel'
 
 export type FileEntry = { file: File; name: string; size: number }
 
@@ -49,12 +50,19 @@ export function ToolLayout({
   const [files, setFiles] = useState<FileEntry[]>([])
   const [dragging, setDragging] = useState(false)
 
+  // Track the first PDF file for the "before" preview
+  const [previewInputFile, setPreviewInputFile] = useState<File | null>(null)
+  const isPdfTool = accept.includes('.pdf') || accept.includes('pdf')
+
   const addFiles = useCallback((incoming: FileList | null) => {
     if (!incoming) return
     const entries: FileEntry[] = Array.from(incoming).map(f => ({
       file: f, name: f.name, size: f.size,
     }))
     setFiles(prev => multiple ? [...prev, ...entries] : entries)
+    // Set the first PDF for live preview
+    const firstPdf = Array.from(incoming).find(f => f.name.endsWith('.pdf') || f.type === 'application/pdf')
+    if (firstPdf) setPreviewInputFile(firstPdf)
     if (onFilesSelected) onFilesSelected(Array.from(incoming))
   }, [multiple, onFilesSelected])
 
@@ -73,11 +81,15 @@ export function ToolLayout({
 
   const handleReset = () => {
     setFiles([])
+    setPreviewInputFile(null)
     onReset()
   }
 
+  // Show wider layout when previews are active
+  const showPreview = isPdfTool && (previewInputFile !== null || (state === 'done' && outputUrl))
+
   return (
-    <div className="min-h-[80vh] px-4 py-12 max-w-3xl mx-auto">
+    <div className={clsx('min-h-[80vh] px-4 py-12 mx-auto transition-all duration-500', showPreview ? 'max-w-6xl' : 'max-w-3xl')}>
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -259,6 +271,56 @@ export function ToolLayout({
         <p className="text-center text-xs text-ink-faint mt-5">
           🔒 All processing happens in your browser · Files never leave your device
         </p>
+
+        {/* ── Live PDF Preview ─────────────────────── */}
+        <AnimatePresence>
+          {showPreview && (
+            <motion.div
+              key="preview-section"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-8"
+            >
+              {/* Section title */}
+              <div className="flex items-center gap-3 mb-5">
+                <div className="h-px flex-1 bg-divider" />
+                <p className="text-xs font-semibold tracking-widest uppercase text-ink-muted">Live Preview</p>
+                <div className="h-px flex-1 bg-divider" />
+              </div>
+
+              <div className={clsx(
+                'grid gap-6',
+                previewInputFile && state === 'done' && outputUrl
+                  ? 'grid-cols-1 md:grid-cols-2'
+                  : 'grid-cols-1',
+              )}>
+                {/* Before */}
+                {previewInputFile && (
+                  <div className="bento-card p-5 space-y-3" style={{ overflow: 'visible' }}>
+                    <PdfPreviewPanel
+                      source={previewInputFile}
+                      label="Original"
+                      accent="clay"
+                    />
+                  </div>
+                )}
+
+                {/* After */}
+                {state === 'done' && outputUrl && (
+                  <div className="bento-card p-5 space-y-3" style={{ overflow: 'visible' }}>
+                    <PdfPreviewPanel
+                      source={outputUrl}
+                      label="Result"
+                      accent="lime"
+                    />
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   )
