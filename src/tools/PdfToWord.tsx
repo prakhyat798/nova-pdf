@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist'
-import { Document, Packer, Paragraph, ImageRun, SectionType, AlignmentType } from 'docx'
+import { Document, Packer, Paragraph, ImageRun, SectionType } from 'docx'
 import { ToolLayout, type ToolState } from '../components/ToolLayout'
 
 GlobalWorkerOptions.workerSrc = new URL(
@@ -10,9 +10,6 @@ GlobalWorkerOptions.workerSrc = new URL(
 
 // Render scale — 2× gives crisp 144dpi images
 const RENDER_SCALE = 2
-
-// 1 PDF point = 12700 EMU (English Metric Units, used by docx)
-const PT_TO_EMU = 12700
 
 // 1 PDF point at 96dpi screen = 96/72 px
 const PT_TO_PX = 96 / 72
@@ -33,6 +30,7 @@ async function renderPageToBuffer(
   ctx.fillStyle = '#ffffff'
   ctx.fillRect(0, 0, canvas.width, canvas.height)
 
+  // @ts-ignore
   await page.render({ canvasContext: ctx, viewport: vp }).promise
 
   // Convert canvas → PNG Uint8Array
@@ -47,7 +45,7 @@ async function pdfToDocx(bytes: ArrayBuffer): Promise<Blob> {
   const pdf      = await getDocument({ data: bytes }).promise
   const numPages = pdf.numPages
 
-  const sections: ConstructorParameters<typeof Document>[0]['sections'] = []
+  const sections: any[] = []
 
   for (let i = 1; i <= numPages; i++) {
     const { buffer, widthPt, heightPt } = await renderPageToBuffer(pdf, i)

@@ -74,6 +74,7 @@ export function PdfPreviewPanel({ source, label = 'Preview', accent = 'lime' }: 
         canvas.height = viewport.height
         const ctx = canvas.getContext('2d')!
 
+        // @ts-ignore
         await page.render({ canvasContext: ctx, viewport }).promise
 
         if (ctrl.signal.aborted) return
